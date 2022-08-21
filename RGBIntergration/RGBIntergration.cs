@@ -1,30 +1,62 @@
 ﻿using OWML.Common;
 using OWML.ModHelper;
+using RGBIntergration.Steelseries;
+using UnityEngine;
 
 namespace RGBIntergration
 {
     public class RGBIntergration : ModBehaviour
     {
+        // Replace this with an array when multiple are supported
+        RGB_Interface ActiveInterface;
+
+        
+
         private void Awake()
         {
-            // You won't be able to access OWML's mod helper in Awake.
-            // So you probably don't want to do anything here.
-            // Use Start() instead.
+            // TODO: Support different interfaces and try to initialise each of them
+            // NB: multiple brands may return true, eg. if keyboard and mouse are different brands
+            //{
+               // RGB_SteelSeries steelSeries = new RGB_SteelSeries();
+               // if (steelSeries.TryInitialise(this))
+               // {
+               //     ActiveInterface = steelSeries;
+               // }
+            //}
         }
 
         private void Start()
         {
-            // Starting here, you'll have access to OWML's mod helper.
-            ModHelper.Console.WriteLine($"My mod {nameof(RGBIntergration)} is loaded!", MessageType.Success);
-
-            // Example of accessing game code.
-            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
-                if (loadScene != OWScene.SolarSystem) return;
-                var playerBody = FindObjectOfType<PlayerBody>();
-                ModHelper.Console.WriteLine($"Found player body, and it's called {playerBody.name}!",
-                    MessageType.Success);
-            };
+                RGB_SteelSeries steelSeries = new RGB_SteelSeries();
+                if (steelSeries.TryInitialise(this))
+                {
+                    ActiveInterface = steelSeries;
+                }
+            }
+
+            if (ActiveInterface != null)
+            {
+                ModHelper.Console.WriteLine($"Interfaced with {ActiveInterface.GetName()}", MessageType.Success);
+            }
+            else
+            {
+                ModHelper.Console.WriteLine($"No supported RGB Interface found", MessageType.Error);
+                return;
+            }
+
+            ActiveInterface.UpdateValue("HEALTH", 100);
+        }
+
+        private void Update()
+        {
+            if (ActiveInterface == null)
+            {
+                return;
+            }
+
+            ActiveInterface.Update(Time.deltaTime);
+            ActiveInterface.UpdateValue("HEALTH", (int)Locator.GetPlayerTransform().GetComponent<PlayerResources>()._currentHealth);
         }
     }
 }
