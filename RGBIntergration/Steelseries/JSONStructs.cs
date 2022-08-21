@@ -10,13 +10,13 @@ namespace RGBIntergration.Steelseries
 {
 	// coreProps.json holds current address for steelseries API
 	[System.Serializable]
-	struct CoreProps
+	public struct CoreProps
 	{
 		public string address;
 	}
 
 	[System.Serializable]
-	struct ColorHandler
+	public struct ColorHandler
 	{
 		[JsonProperty("device-type")]
 		public string device_type;
@@ -30,7 +30,7 @@ namespace RGBIntergration.Steelseries
 	}
 
 	[System.Serializable]
-	struct BindGameEvent
+	public struct BindGameEvent
 	{
 		public string game;
 		[JsonProperty("event")]
@@ -43,13 +43,13 @@ namespace RGBIntergration.Steelseries
 	}
 
 	[System.Serializable]
-	struct EventData
+	public struct EventData
 	{
 		public int value;
 	}
 
 	[System.Serializable]
-	struct GameEvent
+	public struct GameEvent
 	{
 		public string game;
 		[JsonProperty("event")]
@@ -58,7 +58,7 @@ namespace RGBIntergration.Steelseries
 	}
 
 	[System.Serializable]
-	struct StaticColorDefinition
+	public struct StaticColorDefinition
 	{
 		public int red;
 		public int green;
@@ -66,14 +66,14 @@ namespace RGBIntergration.Steelseries
 	}
 
 	[System.Serializable]
-	struct GradientColorDefinition
+	public struct GradientColorDefinition
 	{
 		public StaticColorDefinition zero;
 		public StaticColorDefinition hundred;
 	}
 
 	[System.Serializable]
-	struct RangeColorDefinition
+	public struct RangeColorDefinition
 	{
 		public StaticColorDefinition low;
 		public StaticColorDefinition high;

@@ -30,7 +30,6 @@ namespace RGBIntergration.Steelseries
 			try
 			{
 				ReadServerProps();
-				BindEvents();
 			}
 			catch (Exception e)
 			{
@@ -60,40 +59,10 @@ namespace RGBIntergration.Steelseries
 
 		private void BindEvents()
 		{
-
-			BindGameEvent bindGameEvent = new BindGameEvent { 
-				game = "OUTER_WILDS",
-				eventName = "HEALTH",
-				min_value = 0,
-				max_value = 100,
-				handlers = new List<ColorHandler> { 
-					new ColorHandler() {
-						device_type = "keyboard",
-						zone = "function-keys",
-						color = new StaticColorDefinition() {
-							red = 255,
-							green = 255,
-							blue = 255
-						},
-						mode = "percent"
-					}
-				}
-			};
-
-			ColorHandler colorHandler = new ColorHandler {
-				device_type = "keyboard",
-				zone = "function-keys",
-				color = new StaticColorDefinition() {
-					red = 255,
-					green = 255,
-					blue = 255
-				},
-				mode = "percent"
-			};
-
-			// TODO: Programatically get these from Mod obj
-			Post(Newtonsoft.Json.JsonConvert.SerializeObject(bindGameEvent), "bind_game_event");
-			Mod.ModHelper.Console.WriteLine($"{Newtonsoft.Json.JsonConvert.SerializeObject(bindGameEvent)}", MessageType.Error);
+			foreach (RGBEffectController controller in Mod.EffectControllers)
+			{
+				Post(Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller)), "bind_game_event");
+			}
 		}
 
 		private void Post(string bodyJsonString, string endpoint = "game_event")
@@ -126,6 +95,16 @@ namespace RGBIntergration.Steelseries
 			Mod.ModHelper.Console.WriteLine($"Update request: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent)}", MessageType.Message);
 
 			Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent), "game_event");
+		}
+
+		public void RegisterEvents()
+		{
+			BindEvents();
+		}
+
+		public void UnregisterEvents()
+		{
+			Post("{\"game\":\"OUTER_WILDS\"}", "stop_game");
 		}
 	}
 }
