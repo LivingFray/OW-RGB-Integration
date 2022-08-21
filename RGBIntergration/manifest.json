@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amazingalek/owml/master/schemas/manifest_schema.json",
+  "filename": "RGBIntergration.dll",
+  "author": "LivingFray",
+  "name": "RGB Intergration",
+  "uniqueName": "LivingFray.RGBIntergration",
+  "version": "0.1.0",
+  "owmlVersion": "2.6.0"
+}
