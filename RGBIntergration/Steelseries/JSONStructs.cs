@@ -68,6 +68,12 @@ namespace RGBIntergration.Steelseries
 	[System.Serializable]
 	public struct GradientColorDefinition
 	{
+		public Gradient gradient;
+	}
+
+	[System.Serializable]
+	public struct Gradient
+	{
 		public StaticColorDefinition zero;
 		public StaticColorDefinition hundred;
 	}

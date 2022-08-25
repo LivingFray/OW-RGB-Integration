@@ -10,6 +10,6 @@ namespace RGBIntergration
 	public interface RGBEffectController
 	{
 		public string GetEventName();
-		public void Update(RGBIntergration mod);
+		public void Update(RGBIntegration mod);
 	}
 }

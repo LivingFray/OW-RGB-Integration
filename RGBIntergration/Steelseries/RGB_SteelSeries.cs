@@ -14,7 +14,7 @@ namespace RGBIntergration.Steelseries
 	{
 		private float TimeSinceHeartbeat = 0.0f;
 		private const float HEARTBEAT_RATE = 1.0f;
-		private RGBIntergration Mod;
+		private RGBIntegration Mod;
 		private const string _ServerPropsPath = "%PROGRAMDATA%/SteelSeries/SteelSeries Engine 3/coreProps.json";
 		private string URI;
 		private readonly string heartbeat = "{\"game\":\"OUTER_WILDS\"}";
@@ -24,7 +24,7 @@ namespace RGBIntergration.Steelseries
 			return "SteelSeries GameSense";
 		}
 
-		public bool TryInitialise(RGBIntergration Mod)
+		public bool TryInitialise(RGBIntegration Mod)
 		{
 			this.Mod = Mod;
 			try

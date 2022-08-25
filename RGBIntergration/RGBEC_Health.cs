@@ -13,7 +13,7 @@ namespace RGBIntergration
 
 		private int cachedHealth = 0;
 
-		public void Update(RGBIntergration mod)
+		public void Update(RGBIntegration mod)
 		{
 			try
 			{

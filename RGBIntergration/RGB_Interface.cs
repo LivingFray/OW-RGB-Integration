@@ -9,7 +9,7 @@ namespace RGBIntergration
 	public interface RGB_Interface
 	{
 		// Attempt to interface with the API and return true if successful
-		bool TryInitialise(RGBIntergration Mod);
+		bool TryInitialise(RGBIntegration Mod);
 
 		void RegisterEvents();
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RGBIntergration
 {
-	public class RGBIntergration : ModBehaviour
+	public class RGBIntegration : ModBehaviour
 	{
 		// Replace this with an array when multiple are supported
 		public RGB_Interface ActiveInterface;

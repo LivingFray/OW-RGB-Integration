@@ -15,7 +15,7 @@ namespace RGBIntergration
 			return "FUEL";
 		}
 
-		public void Update(RGBIntergration mod)
+		public void Update(RGBIntegration mod)
 		{
 			try
 			{
