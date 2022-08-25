@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace RGBIntergration.Steelseries
+namespace RGBIntegration.Steelseries
 {
 	class RGB_SteelSeries : RGB_Interface
 	{
@@ -84,10 +84,12 @@ namespace RGBIntergration.Steelseries
 
 		public void UpdateValue(string name, int value)
 		{
-			GameEvent gameEvent = new GameEvent() {
+			GameEvent gameEvent = new GameEvent() 
+			{
 				game = "OUTER_WILDS",
 				eventName = name,
-				data = new EventData() {
+				data = new EventData() 
+				{
 					value = value
 				}
 			};
@@ -104,7 +106,34 @@ namespace RGBIntergration.Steelseries
 
 		public void UnregisterEvents()
 		{
+			//Debug
+			Post("{\"game\":\"OUTER_WILDS\"}", "remove_game");
 			Post("{\"game\":\"OUTER_WILDS\"}", "stop_game");
+		}
+
+		public void UpdateColor(string name, Color color)
+		{
+			GameEvent gameEvent = new GameEvent() 
+			{
+				game = "OUTER_WILDS",
+				eventName = name,
+				data = new EventData() 
+				{ 
+					value = 1,
+					frame = new Frame() 
+					{
+						zone_one_color = new StaticColorDefinition() 
+						{
+							red = (int)color.r,
+							green = (int)color.g,
+							blue = (int)color.b
+						}
+					}
+				}
+			};
+
+			Mod.ModHelper.Console.WriteLine($"Update Color request: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent)}", MessageType.Message);
+			Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent), "game_event");
 		}
 	}
 }

@@ -1,10 +1,11 @@
 ﻿using OWML.Common;
 using OWML.ModHelper;
-using RGBIntergration.Steelseries;
+using RGBIntegration.EffectControllers;
+using RGBIntegration.Steelseries;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RGBIntergration
+namespace RGBIntegration
 {
 	public class RGBIntegration : ModBehaviour
 	{
@@ -15,9 +16,11 @@ namespace RGBIntergration
 
 		private bool isActive = false;
 
+		private float LastDeltaTime;
+
 		private void Awake()
 		{
-
+			LastDeltaTime = Time.realtimeSinceStartup;
 		}
 
 		private void Start()
@@ -74,7 +77,9 @@ namespace RGBIntergration
 				return;
 			}
 
-			ActiveInterface.Update(Time.deltaTime);
+			float Now = Time.realtimeSinceStartup;
+			ActiveInterface.Update(Now - LastDeltaTime);
+			LastDeltaTime = Now;
 
 			foreach (RGBEffectController effectController in EffectControllers)
 			{
@@ -85,6 +90,7 @@ namespace RGBIntergration
 		private void CreateEffectControllers()
 		{
 			EffectControllers = new List<RGBEffectController>() {
+				new RGBEC_Background(),
 				new RGBEC_Health(),
 				new RGBEC_Oxygen(),
 				new RGBEC_Fuel(),

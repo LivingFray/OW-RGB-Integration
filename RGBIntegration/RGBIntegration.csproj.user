@@ -1,5 +1,5 @@
 ﻿<Project>
   <PropertyGroup>
-    <OutputPath>$(AppData)\OuterWildsModManager\OWML\Mods\LivingFray.RGBIntergration</OutputPath>
+    <OutputPath>$(AppData)\OuterWildsModManager\OWML\Mods\LivingFray.RGBIntegration</OutputPath>
   </PropertyGroup>
 </Project>

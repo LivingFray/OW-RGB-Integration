@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RGBIntergration
+namespace RGBIntegration
 {
 	public class RGBEC_Health : RGBEffectController
 	{
@@ -18,9 +18,10 @@ namespace RGBIntergration
 			try
 			{
 				var pr = Locator.GetPlayerTransform().GetComponent<PlayerResources>();
-				if (pr._currentHealth != cachedHealth)
+				int roundedHealth = Math.Max(0, (int)(pr.GetHealthFraction() * 100));
+				if (roundedHealth != cachedHealth)
 				{
-					cachedHealth = (int)pr._currentHealth;
+					cachedHealth = roundedHealth;
 					mod.ActiveInterface.UpdateValue(GetEventName(), cachedHealth);
 				}
 			}

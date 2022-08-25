@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 #pragma warning disable 0649
-namespace RGBIntergration.Steelseries
+namespace RGBIntegration.Steelseries
 {
 	// coreProps.json holds current address for steelseries API
 	[System.Serializable]
@@ -35,9 +35,9 @@ namespace RGBIntergration.Steelseries
 		public string game;
 		[JsonProperty("event")]
 		public string eventName;
-		public int min_value;
-		public int max_value;
-		public int icon_id;
+		public int? min_value;
+		public int? max_value;
+		public int? icon_id;
 		public bool value_optional;
 		public List<ColorHandler> handlers;
 	}
@@ -45,7 +45,16 @@ namespace RGBIntergration.Steelseries
 	[System.Serializable]
 	public struct EventData
 	{
-		public int value;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public int? value;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public Frame frame;
+	}
+
+	public struct Frame
+	{
+		[JsonProperty("zone-one-color", NullValueHandling = NullValueHandling.Ignore)]
+		public object zone_one_color;
 	}
 
 	[System.Serializable]

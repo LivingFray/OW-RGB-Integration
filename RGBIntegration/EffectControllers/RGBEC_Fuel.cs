@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RGBIntergration
+namespace RGBIntegration
 {
-	public class RGBEC_Oxygen : RGBEffectController
+	public class RGBEC_Fuel : RGBEffectController
 	{
-		private int cachedOxygen = 0;
+		private int cachedFuel = 0;
 
 		public string GetEventName()
 		{
-			return "OXYGEN";
+			return "FUEL";
 		}
 
 		public void Update(RGBIntegration mod)
@@ -20,11 +20,11 @@ namespace RGBIntergration
 			try
 			{
 				var pr = Locator.GetPlayerTransform().GetComponent<PlayerResources>();
-				var currentOxygen = (int)(pr.GetOxygenFraction() * 100);
-				if (currentOxygen != cachedOxygen)
+				var currentFuel = Math.Max(0, (int)(pr.GetFuelFraction() * 100));
+				if (currentFuel != cachedFuel)
 				{
-					cachedOxygen = currentOxygen;
-					mod.ActiveInterface.UpdateValue(GetEventName(), cachedOxygen);
+					cachedFuel = currentFuel;
+					mod.ActiveInterface.UpdateValue(GetEventName(), cachedFuel);
 				}
 			}
 			catch

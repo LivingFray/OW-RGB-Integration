@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RGBIntergration.Steelseries
+namespace RGBIntegration.Steelseries
 {
 	public class EffectDefinitions
 	{
@@ -24,11 +24,23 @@ namespace RGBIntergration.Steelseries
 							new ColorHandler() {
 								device_type = "keyboard",
 								zone = "function-keys",
-								color = new StaticColorDefinition() 
+								color = new GradientColorDefinition() 
 								{
-									red = 255,
-									green = 255,
-									blue = 255
+									gradient = new Gradient() 
+									{
+										zero = new StaticColorDefinition() 
+										{
+											red = 255,
+											green = 0,
+											blue = 0
+										},
+										hundred = new StaticColorDefinition()
+										{
+											red = 0,
+											green = 255,
+											blue = 0
+										},
+									}
 								},
 								mode = "percent"
 							}
@@ -78,8 +90,29 @@ namespace RGBIntergration.Steelseries
 							}
 						}
 					};
-				case "TIME":
-					return new BindGameEvent();
+				case "BACKGROUND":
+					//TODO: Actual background, multiple binds per event
+					return new BindGameEvent() 
+					{
+						game = "OUTER_WILDS",
+						eventName = "BACKGROUND",
+						value_optional = true,
+						handlers = new List<ColorHandler> 
+						{
+							new ColorHandler() {
+								device_type = "mouse",
+								zone = "logo",
+								color = new StaticColorDefinition() 
+								{
+									red = 255,
+									green = 127,
+									blue = 0
+								},
+								mode = "context-color",
+								context_frame_key = "zone-one-color"
+							}
+						}
+					};
 			}
 
 			return new BindGameEvent();
