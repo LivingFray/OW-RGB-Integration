@@ -9,6 +9,9 @@ namespace RGBIntegration.EffectControllers
 {
 	public class RGBEC_Background : RGBEffectController
 	{
+		float TimeSinceUpdated = 0.0f;
+		const float UpdateFrequency = 0.5f;
+
 		public string GetEventName()
 		{
 			return "BACKGROUND";
@@ -16,7 +19,27 @@ namespace RGBIntegration.EffectControllers
 
 		public void Update(RGBIntegration mod)
 		{
-			mod.ActiveInterface.UpdateColor("BACKGROUND", new Color(0, 0, 255));
+			TimeSinceUpdated += Time.deltaTime;
+			if (TimeSinceUpdated > UpdateFrequency)
+			{
+				TimeSinceUpdated -= UpdateFrequency;
+				SunController sun = Locator.GetSunController();
+				if (!sun)
+				{
+					return;
+				}
+
+				// TODO: Occluded places (GD, DB, QM, stranger, etc) get own effects
+
+				if (!sun._collapseStarted)
+				{
+					mod.ActiveInterface.UpdateColor("BACKGROUND", sun._atmosphereColor.Evaluate(Mathf.InverseLerp(sun._progressionStartTime, sun._progressionEndTime, TimeLoop.GetMinutesElapsed())));
+				}
+				else
+				{
+					mod.ActiveInterface.UpdateColor("BACKGROUND", sun._collapseAtmosphereColor.Evaluate(sun._collapseT));
+				}
+			}
 		}
 	}
 }

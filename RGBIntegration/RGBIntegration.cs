@@ -77,14 +77,14 @@ namespace RGBIntegration
 				return;
 			}
 
-			float Now = Time.realtimeSinceStartup;
-			ActiveInterface.Update(Now - LastDeltaTime);
-			LastDeltaTime = Now;
-
 			foreach (RGBEffectController effectController in EffectControllers)
 			{
 				effectController.Update(this);
 			}
+
+			float Now = Time.realtimeSinceStartup;
+			ActiveInterface.Update(Now - LastDeltaTime);
+			LastDeltaTime = Now;
 		}
 
 		private void CreateEffectControllers()

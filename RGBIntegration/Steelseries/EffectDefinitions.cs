@@ -19,6 +19,7 @@ namespace RGBIntegration.Steelseries
 						eventName = "HEALTH",
 						min_value = 0,
 						max_value = 100,
+						value_optional = true,
 						handlers = new List<ColorHandler> 
 						{
 							new ColorHandler() {
@@ -53,6 +54,7 @@ namespace RGBIntegration.Steelseries
 						eventName = "OXYGEN",
 						min_value = 0,
 						max_value = 100,
+						value_optional = true,
 						handlers = new List<ColorHandler> 
 						{
 							new ColorHandler() {
@@ -75,6 +77,7 @@ namespace RGBIntegration.Steelseries
 						eventName = "FUEL",
 						min_value = 0,
 						max_value = 100,
+						value_optional = true,
 						handlers = new List<ColorHandler>
 						{
 							new ColorHandler() {
@@ -91,7 +94,6 @@ namespace RGBIntegration.Steelseries
 						}
 					};
 				case "BACKGROUND":
-					//TODO: Actual background, multiple binds per event
 					return new BindGameEvent() 
 					{
 						game = "OUTER_WILDS",
@@ -102,7 +104,31 @@ namespace RGBIntegration.Steelseries
 							new ColorHandler() {
 								device_type = "mouse",
 								zone = "logo",
-								color = new StaticColorDefinition() 
+								color = new StaticColorDefinition()
+								{
+									red = 255,
+									green = 127,
+									blue = 0
+								},
+								mode = "context-color",
+								context_frame_key = "zone-one-color"
+							},
+							new ColorHandler() {
+								device_type = "mouse",
+								zone = "wheel",
+								color = new StaticColorDefinition()
+								{
+									red = 255,
+									green = 127,
+									blue = 0
+								},
+								mode = "context-color",
+								context_frame_key = "zone-one-color"
+							},
+							new ColorHandler() {
+								device_type = "keyboard",
+								zone = "all",
+								color = new StaticColorDefinition()
 								{
 									red = 255,
 									green = 127,

@@ -19,6 +19,10 @@ namespace RGBIntegration.Steelseries
 		private string URI;
 		private readonly string heartbeat = "{\"game\":\"OUTER_WILDS\"}";
 
+		// Due to the wonders of the "all" region overriding other regions, resend all regions at once when one changes
+		private Dictionary<string, GameEvent> RecentEvents = new Dictionary<string, GameEvent>();
+		private bool EventUpdated = false;
+
 		public string GetName()
 		{
 			return "SteelSeries GameSense";
@@ -48,6 +52,27 @@ namespace RGBIntegration.Steelseries
 
 				Post(heartbeat, "game_heartbeat");
 			}
+
+			if (EventUpdated)
+			{
+				MultipleEvents gameEvents = new MultipleEvents() 
+				{ 
+					game = "OUTER_WILDS", 
+					events = new List<GameEvent>() 
+				};
+
+				foreach (RGBEffectController effectController in Mod.EffectControllers)
+				{
+					GameEvent gameEvent;
+					if (RecentEvents.TryGetValue(effectController.GetEventName(), out gameEvent))
+					{
+						gameEvents.events.Add(gameEvent);
+					}
+				}
+				Mod.ModHelper.Console.WriteLine($"Sending event: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents)}", MessageType.Message);
+				Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents), "multiple_game_events");
+				EventUpdated = false;
+			}
 		}
 
 		private void ReadServerProps()
@@ -61,6 +86,7 @@ namespace RGBIntegration.Steelseries
 		{
 			foreach (RGBEffectController controller in Mod.EffectControllers)
 			{
+				Mod.ModHelper.Console.WriteLine($"Bind event: {Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller))}", MessageType.Message);
 				Post(Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller)), "bind_game_event");
 			}
 		}
@@ -94,9 +120,8 @@ namespace RGBIntegration.Steelseries
 				}
 			};
 
-			Mod.ModHelper.Console.WriteLine($"Update request: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent)}", MessageType.Message);
-
-			Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent), "game_event");
+			RecentEvents[name] = gameEvent;
+			EventUpdated = true;
 		}
 
 		public void RegisterEvents()
@@ -124,16 +149,16 @@ namespace RGBIntegration.Steelseries
 					{
 						zone_one_color = new StaticColorDefinition() 
 						{
-							red = (int)color.r,
-							green = (int)color.g,
-							blue = (int)color.b
+							red = (int)(color.r * 255),
+							green = (int)(color.g * 255),
+							blue = (int)(color.b * 255)
 						}
 					}
 				}
 			};
 
-			Mod.ModHelper.Console.WriteLine($"Update Color request: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent)}", MessageType.Message);
-			Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent), "game_event");
+			RecentEvents[name] = gameEvent;
+			EventUpdated = true;
 		}
 	}
 }

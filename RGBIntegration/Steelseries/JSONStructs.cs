@@ -16,6 +16,13 @@ namespace RGBIntegration.Steelseries
 	}
 
 	[System.Serializable]
+	public struct MultipleEvents
+	{
+		public string game;
+		public List<GameEvent> events;
+	}
+
+	[System.Serializable]
 	public struct ColorHandler
 	{
 		[JsonProperty("device-type")]
@@ -25,7 +32,7 @@ namespace RGBIntegration.Steelseries
 		public object color;
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public object rate;
-		[JsonProperty("context_frame_key", NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty("context-frame-key", NullValueHandling = NullValueHandling.Ignore)]
 		public string context_frame_key;
 	}
 
@@ -35,8 +42,11 @@ namespace RGBIntegration.Steelseries
 		public string game;
 		[JsonProperty("event")]
 		public string eventName;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public int? min_value;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public int? max_value;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public int? icon_id;
 		public bool value_optional;
 		public List<ColorHandler> handlers;
@@ -60,6 +70,7 @@ namespace RGBIntegration.Steelseries
 	[System.Serializable]
 	public struct GameEvent
 	{
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string game;
 		[JsonProperty("event")]
 		public string eventName;
