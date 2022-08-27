@@ -135,8 +135,6 @@ namespace RGBIntegration.Steelseries
 
 		public void UnregisterEvents()
 		{
-			//Debug
-			Post("{\"game\":\"OUTER_WILDS\"}", "remove_game");
 			Post("{\"game\":\"OUTER_WILDS\"}", "stop_game");
 		}
 

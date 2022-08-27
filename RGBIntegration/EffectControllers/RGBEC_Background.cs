@@ -21,91 +21,90 @@ namespace RGBIntegration.EffectControllers
 
 		public void Update(RGBIntegration mod)
 		{
-			SunController sun = Locator.GetSunController();
-			if (!sun)
-			{
-				return;
-			}
-
 			Color ColorToSend;
 
-			if (PlayerState.InGiantsDeep())
+			SunController sun = Locator.GetSunController();
+			if (sun)
 			{
-				ColorToSend = new Color(116.0f / 255.0f, 112.0f / 255.0f, 43.0f / 255.0f) * sun._sunLight.sunIntensity;
-			}
-			else if (PlayerState.OnQuantumMoon())
-			{
-				// TODO: Change based on quantum location
-				ColorToSend = new Color(1.0f, 0.0f, 1.0f);
-			}
-			else if (PlayerState.InCloakingField())
-			{
-				PlayerSectorDetector sectorDetector = Locator.GetPlayerSectorDetector();
-
-				bool InsideRingworld = false;
-
-				if (sectorDetector)
+				if (PlayerState.InGiantsDeep())
 				{
-					foreach (Sector sector in sectorDetector._sectorList)
+					ColorToSend = new Color(116.0f / 255.0f, 112.0f / 255.0f, 43.0f / 255.0f) * sun._sunLight.sunIntensity;
+				}
+				else if (PlayerState.OnQuantumMoon())
+				{
+					// TODO: Change based on quantum location
+					ColorToSend = new Color(0.2f, 0.0f, 0.2f);
+				}
+				else if (PlayerState.InCloakingField())
+				{
+					PlayerSectorDetector sectorDetector = Locator.GetPlayerSectorDetector();
+
+					bool InsideRingworld = false;
+
+					if (sectorDetector)
 					{
-						if (sector.GetIDString() == "RingWorldInterior")
+						foreach (Sector sector in sectorDetector._sectorList)
 						{
-							InsideRingworld = true;
-							break;
+							if (sector.GetIDString() == "RingWorldInterior")
+							{
+								InsideRingworld = true;
+								break;
+							}
 						}
 					}
-				}
 
-				if (InsideRingworld)
-				{
-					Light fakeSun = GameObject.Find("RingWorld_Body/Sector_RingInterior/Lights_RingInterior/IP_SunLight").GetComponent<Light>();
-					ColorToSend = fakeSun.color * fakeSun.intensity;
-				}
-				else if (PlayerState.InDreamWorld())
-				{
-					DreamLanternItem playerLantern = Locator.GetDreamWorldController().GetPlayerLantern();
-					if (playerLantern.GetLanternController().IsConcealed())
+					if (InsideRingworld)
 					{
-						ColorToSend = new Color(0.0f, 0.0f, 0.0f);
+						Light fakeSun = GameObject.Find("RingWorld_Body/Sector_RingInterior/Lights_RingInterior/IP_SunLight").GetComponent<Light>();
+						ColorToSend = fakeSun.color * fakeSun.intensity;
+					}
+					else if (PlayerState.InDreamWorld())
+					{
+						DreamLanternItem playerLantern = Locator.GetDreamWorldController().GetPlayerLantern();
+						if (playerLantern.GetLanternController().IsConcealed())
+						{
+							ColorToSend = new Color(0.0f, 0.0f, 0.0f);
+						}
+						else
+						{
+							ColorToSend = new Color(44.0f / 255.0f, 192.0f / 255.0f, 120.0f / 255.0f);
+						}
 					}
 					else
 					{
-						ColorToSend = new Color(44.0f / 255.0f, 192.0f / 255.0f, 120.0f / 255.0f);
+						TimeSinceEnteredCloak += Time.deltaTime;
+
+						int flickerIndex = 0;
+						for (int i = 0; i < FlickerSwitchTimes.Length; i++)
+						{
+							if (TimeSinceEnteredCloak < FlickerSwitchTimes[i])
+							{
+								break;
+							}
+							flickerIndex = i + 1;
+						}
+						ColorToSend = flickerIndex % 2 == 0 ? CurrentSunColor(sun) : new Color(0.0f, 0.0f, 0.0f);
 					}
+				}
+				else if (PlayerState.InBrambleDimension())
+				{
+					// TODO: Fog
+					ColorToSend = new Color(83.0f / 255.0f, 99.0f / 255.0f, 87.0f / 255.0f);
 				}
 				else
 				{
-					TimeSinceEnteredCloak += Time.deltaTime;
-
-					int flickerIndex = 0;
-					for (int i = 0; i < FlickerSwitchTimes.Length; i++)
-					{
-						if (TimeSinceEnteredCloak < FlickerSwitchTimes[i])
-						{
-							break;
-						}
-						flickerIndex = i + 1;
-					}
-					ColorToSend = flickerIndex % 2 == 0 ? CurrentSunColor(sun) : new Color(0.0f, 0.0f, 0.0f);
+					ColorToSend = CurrentSunColor(sun);
 				}
-			}
-			else if (PlayerState.InBrambleDimension())
-			{
-				// TODO: Fog
-				ColorToSend = new Color(83.0f / 255.0f, 99.0f / 255.0f, 87.0f / 255.0f);
-			}
-			else if (PlayerState.IsInsideTheEye())
-			{
-				ColorToSend = new Color(1.0f, 0.0f, 1.0f);
+
+				if (!PlayerState.InCloakingField())
+				{
+					TimeSinceEnteredCloak = 0.0f;
+				}
 			}
 			else
 			{
-				ColorToSend = CurrentSunColor(sun);
-			}
-
-			if (!PlayerState.InCloakingField())
-			{
-				TimeSinceEnteredCloak = 0.0f;
+				// Presumably we are at the eye
+				ColorToSend = new Color(0.2f, 0.0f, 0.2f);
 			}
 
 			if (ColorToSend != LastColor)
