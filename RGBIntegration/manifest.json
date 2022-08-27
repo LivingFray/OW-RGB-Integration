@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/amazingalek/owml/master/schemas/manifest_schema.json",
   "filename": "RGBIntegration.dll",
   "author": "LivingFray",
-  "name": "RGB Integration",
+  "name": "(SteelSeries) RGB Integration",
   "uniqueName": "LivingFray.RGBIntegration",
   "version": "0.1.0",
   "owmlVersion": "2.6.0"
