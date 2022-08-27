@@ -107,20 +107,8 @@ namespace RGBIntegration.Steelseries
 								color = new StaticColorDefinition()
 								{
 									red = 255,
-									green = 127,
-									blue = 0
-								},
-								mode = "context-color",
-								context_frame_key = "zone-one-color"
-							},
-							new ColorHandler() {
-								device_type = "mouse",
-								zone = "wheel",
-								color = new StaticColorDefinition()
-								{
-									red = 255,
-									green = 127,
-									blue = 0
+									green = 158,
+									blue = 7
 								},
 								mode = "context-color",
 								context_frame_key = "zone-one-color"
@@ -131,7 +119,28 @@ namespace RGBIntegration.Steelseries
 								color = new StaticColorDefinition()
 								{
 									red = 255,
-									green = 127,
+									green = 158,
+									blue = 7
+								},
+								mode = "context-color",
+								context_frame_key = "zone-one-color"
+							}
+						}
+					};
+				case "FLASHLIGHT":
+					return new BindGameEvent() {
+						game = "OUTER_WILDS",
+						eventName = "FLASHLIGHT",
+						value_optional = true,
+						handlers = new List<ColorHandler>
+						{
+							new ColorHandler() {
+								device_type = "mouse",
+								zone = "wheel",
+								color = new StaticColorDefinition()
+								{
+									red = 0,
+									green = 0,
 									blue = 0
 								},
 								mode = "context-color",

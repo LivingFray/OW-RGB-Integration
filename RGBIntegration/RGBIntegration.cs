@@ -94,6 +94,7 @@ namespace RGBIntegration
 				new RGBEC_Health(),
 				new RGBEC_Oxygen(),
 				new RGBEC_Fuel(),
+				new RGBEC_Flashlight(),
 			};
 		}
 	}

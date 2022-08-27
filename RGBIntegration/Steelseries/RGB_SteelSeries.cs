@@ -22,6 +22,8 @@ namespace RGBIntegration.Steelseries
 		// Due to the wonders of the "all" region overriding other regions, resend all regions at once when one changes
 		private Dictionary<string, GameEvent> RecentEvents = new Dictionary<string, GameEvent>();
 		private bool EventUpdated = false;
+		private const float UPDATE_RATE = 0.05f;
+		private float TimeSinceLastUpdate = UPDATE_RATE;
 
 		public string GetName()
 		{
@@ -46,6 +48,7 @@ namespace RGBIntegration.Steelseries
 		public void Update(float DeltaTime)
 		{
 			TimeSinceHeartbeat += DeltaTime;
+			TimeSinceLastUpdate += DeltaTime;
 			if (TimeSinceHeartbeat > HEARTBEAT_RATE)
 			{
 				TimeSinceHeartbeat -= HEARTBEAT_RATE;
@@ -53,7 +56,7 @@ namespace RGBIntegration.Steelseries
 				Post(heartbeat, "game_heartbeat");
 			}
 
-			if (EventUpdated)
+			if (EventUpdated && TimeSinceLastUpdate > UPDATE_RATE)
 			{
 				MultipleEvents gameEvents = new MultipleEvents() 
 				{ 
@@ -72,6 +75,7 @@ namespace RGBIntegration.Steelseries
 				Mod.ModHelper.Console.WriteLine($"Sending event: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents)}", MessageType.Message);
 				Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents), "multiple_game_events");
 				EventUpdated = false;
+				TimeSinceLastUpdate = 0.0f;
 			}
 		}
 
