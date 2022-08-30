@@ -24,7 +24,6 @@ namespace RGBIntegration.EffectControllers
 				DreamLanternItem playerLantern = Locator.GetDreamWorldController().GetPlayerLantern();
 				if (playerLantern && !playerLantern.GetLanternController().IsConcealed() && playerLantern.GetLanternController().IsHeldByPlayer())
 				{
-					mod.ModHelper.Console.WriteLine(playerLantern.GetLanternController().GetLight().GetLight().color.ToString(), OWML.Common.MessageType.Message);
 					NewColor = new Color(44.0f / 255.0f, 192.0f / 255.0f, 120.0f / 255.0f);
 				}
 				else

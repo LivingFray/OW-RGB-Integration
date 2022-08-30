@@ -94,38 +94,63 @@ namespace RGBIntegration.Steelseries
 						}
 					};
 				case "BACKGROUND":
+					// Steelseries, would you care to explain why there is no easy way to set every zone of a zoned keyboard to one colour?
+
+					List<ColorHandler> allHandlers = new List<ColorHandler>()
+					{
+						new ColorHandler() 
+						{
+							device_type = "mouse",
+							zone = "logo",
+							color = new StaticColorDefinition()
+							{
+								red = 255,
+								green = 158,
+								blue = 7
+							},
+							mode = "context-color",
+							context_frame_key = "zone-one-color"
+						},
+						new ColorHandler() 
+						{
+							device_type = "keyboard",
+							zone = "all",
+							color = new StaticColorDefinition()
+							{
+								red = 255,
+								green = 158,
+								blue = 7
+							},
+							mode = "context-color",
+							context_frame_key = "zone-one-color"
+						}
+					};
+
+					string[] zones = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty - one", "twenty - two", "twenty - three", "twenty - four", "twenty - five", "twenty - six", "twenty - seven", "twenty - eight", "twenty - nine", "thirty", "thirty - one", "thirty - two", "thirty - three", "thirty - four", "thirty - five", "thirty - six", "thirty - seven", "thirty - eight", "thirty - nine", "forty", "forty - one", "forty - two", "forty - three", "forty - four", "forty - five", "forty - six", "forty - seven", "forty - eight", "forty - nine", "fifty", "fifty - one", "fifty - two", "fifty - three", "fifty - four", "fifty - five", "fifty - six", "fifty - seven", "fifty - eight", "fifty - nine", "sixty", "sixty - one", "sixty - two", "sixty - three", "sixty - four", "sixty - five", "sixty - six", "sixty - seven", "sixty - eight", "sixty - nine", "seventy", "seventy - one", "seventy - two", "seventy - three", "seventy - four", "seventy - five", "seventy - six", "seventy - seven", "seventy - eight", "seventy - nine", "eighty", "eighty - one", "eighty - two", "eighty - three", "eighty - four", "eighty - five", "eighty - six", "eighty - seven", "eighty - eight", "eighty - nine", "ninety", "ninety - one", "ninety - two", "ninety - three", "ninety - four", "ninety - five", "ninety - six", "ninety - seven", "ninety - eight", "ninety - nine", "one - hundred", "one - hundred - one", "one - hundred - two", "one - hundred - three" };
+
+					for (int i = 0; i < zones.Length; i++)
+					{
+						allHandlers.Add(new ColorHandler()
+						{
+							device_type = "rgb-zoned-device",
+							zone = zones[i],
+							color = new StaticColorDefinition() 
+							{
+								red = 255,
+								green = 158,
+								blue = 7
+							},
+							mode = "context-color",
+							context_frame_key = "zone-one-color"
+						});
+					}
+
 					return new BindGameEvent() 
 					{
 						game = "OUTER_WILDS",
 						eventName = "BACKGROUND",
 						value_optional = true,
-						handlers = new List<ColorHandler> 
-						{
-							new ColorHandler() {
-								device_type = "mouse",
-								zone = "logo",
-								color = new StaticColorDefinition()
-								{
-									red = 255,
-									green = 158,
-									blue = 7
-								},
-								mode = "context-color",
-								context_frame_key = "zone-one-color"
-							},
-							new ColorHandler() {
-								device_type = "keyboard",
-								zone = "all",
-								color = new StaticColorDefinition()
-								{
-									red = 255,
-									green = 158,
-									blue = 7
-								},
-								mode = "context-color",
-								context_frame_key = "zone-one-color"
-							}
-						}
+						handlers = allHandlers
 					};
 				case "FLASHLIGHT":
 					return new BindGameEvent() {

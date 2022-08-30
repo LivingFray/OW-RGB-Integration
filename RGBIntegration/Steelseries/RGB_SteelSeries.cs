@@ -72,7 +72,7 @@ namespace RGBIntegration.Steelseries
 						gameEvents.events.Add(gameEvent);
 					}
 				}
-				Mod.ModHelper.Console.WriteLine($"Sending event: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents)}", MessageType.Message);
+				Mod.ModHelper.Console.WriteLine($"Sending event: {Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents)}", MessageType.Debug);
 				Post(Newtonsoft.Json.JsonConvert.SerializeObject(gameEvents), "multiple_game_events");
 				EventUpdated = false;
 				TimeSinceLastUpdate = 0.0f;
@@ -90,7 +90,7 @@ namespace RGBIntegration.Steelseries
 		{
 			foreach (RGBEffectController controller in Mod.EffectControllers)
 			{
-				Mod.ModHelper.Console.WriteLine($"Bind event: {Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller))}", MessageType.Message);
+				Mod.ModHelper.Console.WriteLine($"Bind event: {Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller))}", MessageType.Debug);
 				Post(Newtonsoft.Json.JsonConvert.SerializeObject(EffectDefinitions.GetBindGameEvent(controller)), "bind_game_event");
 			}
 		}
@@ -106,8 +106,8 @@ namespace RGBIntegration.Steelseries
 				if (request.responseCode != 200)
 				{
 					Mod.ModHelper.Console.WriteLine($"{request.error}", MessageType.Error);
-					Mod.ModHelper.Console.WriteLine($"Bad request: {bodyJsonString}", MessageType.Message);
-					Mod.ModHelper.Console.WriteLine($"{request.downloadHandler.text}", MessageType.Message);
+					Mod.ModHelper.Console.WriteLine($"Bad request: {bodyJsonString}", MessageType.Error);
+					Mod.ModHelper.Console.WriteLine($"{request.downloadHandler.text}", MessageType.Error);
 				}
 			};
 		}
