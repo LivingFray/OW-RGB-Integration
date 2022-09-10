@@ -1,5 +1,5 @@
 Adds RGB effects to supported devices.
-(Currently only supports SteelSeries keyboards/mice)
+(Supports SteelSeries and Razer keyboards/mice)
 
 # Effects
 - Health
