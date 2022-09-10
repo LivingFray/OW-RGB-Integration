@@ -22,7 +22,10 @@ namespace RGBIntegration
 				if (roundedHealth != cachedHealth)
 				{
 					cachedHealth = roundedHealth;
-					mod.ActiveInterface.UpdateValue(GetEventName(), cachedHealth);
+					for (int i = 0; i < mod.ActiveInterfaces.Count; i++)
+					{
+						mod.ActiveInterfaces[i].UpdateValue(GetEventName(), cachedHealth);
+					}
 				}
 			}
 			catch

@@ -46,7 +46,10 @@ namespace RGBIntegration.EffectControllers
 
 			if (LastColor != NewColor)
 			{
-				mod.ActiveInterface.UpdateColor("FLASHLIGHT", NewColor);
+				for (int i = 0; i < mod.ActiveInterfaces.Count; i++)
+				{
+					mod.ActiveInterfaces[i].UpdateColor("FLASHLIGHT", NewColor);
+				}
 				LastColor = NewColor;
 			}
 		}

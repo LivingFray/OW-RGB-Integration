@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/amazingalek/owml/master/schemas/manifest_schema.json",
   "filename": "RGBIntegration.dll",
   "author": "LivingFray",
-  "name": "(SteelSeries) RGB Integration",
+  "name": "(Razer/SteelSeries) RGB Integration",
   "uniqueName": "LivingFray.RGBIntegration",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "owmlVersion": "2.6.0"
 }

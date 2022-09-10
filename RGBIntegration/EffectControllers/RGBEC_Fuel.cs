@@ -24,7 +24,10 @@ namespace RGBIntegration
 				if (currentFuel != cachedFuel)
 				{
 					cachedFuel = currentFuel;
-					mod.ActiveInterface.UpdateValue(GetEventName(), cachedFuel);
+					for (int i = 0; i < mod.ActiveInterfaces.Count; i++)
+					{
+						mod.ActiveInterfaces[i].UpdateValue(GetEventName(), cachedFuel);
+					}
 				}
 			}
 			catch

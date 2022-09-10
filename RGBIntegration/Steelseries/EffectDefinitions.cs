@@ -132,7 +132,7 @@ namespace RGBIntegration.Steelseries
 					{
 						allHandlers.Add(new ColorHandler()
 						{
-							device_type = "rgb-zoned-device",
+							device_type = "keyboard",
 							zone = zones[i],
 							color = new StaticColorDefinition() 
 							{

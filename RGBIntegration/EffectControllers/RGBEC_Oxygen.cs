@@ -24,7 +24,10 @@ namespace RGBIntegration
 				if (currentOxygen != cachedOxygen)
 				{
 					cachedOxygen = currentOxygen;
-					mod.ActiveInterface.UpdateValue(GetEventName(), cachedOxygen);
+					for (int i = 0; i < mod.ActiveInterfaces.Count; i++)
+					{
+						mod.ActiveInterfaces[i].UpdateValue(GetEventName(), cachedOxygen);
+					}
 				}
 			}
 			catch

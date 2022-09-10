@@ -109,7 +109,10 @@ namespace RGBIntegration.EffectControllers
 
 			if (ColorToSend != LastColor)
 			{
-				mod.ActiveInterface.UpdateColor("BACKGROUND", ColorToSend);
+				for (int i = 0; i < mod.ActiveInterfaces.Count; i++)
+				{
+					mod.ActiveInterfaces[i].UpdateColor("BACKGROUND", ColorToSend);
+				}
 				LastColor = ColorToSend;
 			}
 		}
