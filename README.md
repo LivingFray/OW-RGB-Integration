@@ -1,3 +1,4 @@
+![image](https://user-images.githubusercontent.com/5647734/189492156-4fd7cc9f-ef5a-433d-a0f3-1b075322525a.png)
 Adds RGB effects to supported devices.
 (Supports SteelSeries and Razer keyboards/mice)
 
@@ -9,4 +10,4 @@ Adds RGB effects to supported devices.
 - Ambient effects based on location and loop time
 
 Note: Only ambient effects will show on keyboards without per-key lighting
-(Probably, I don't own a non-per-key lighting keyboard so I have to trust I followed the docs correctly)
+Steelseries users might be able to customise this in SSE settings
