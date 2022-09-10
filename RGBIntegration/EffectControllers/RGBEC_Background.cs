@@ -33,7 +33,43 @@ namespace RGBIntegration.EffectControllers
 				else if (PlayerState.OnQuantumMoon())
 				{
 					// TODO: Change based on quantum location
-					ColorToSend = new Color(0.2f, 0.0f, 0.2f);
+
+					QuantumMoon qm = Locator.GetQuantumMoon();
+
+					if (!qm.CheckIllumination())
+					{
+						ColorToSend = new Color(0.0f, 0.0f, 0.0f);
+					}
+					else
+					{
+						//0 = hourglass
+						//1 = timber
+						//2 = brittle
+						//3 = giant
+						//4 = bramble
+						//5 = eye
+						switch (qm.GetStateIndex())
+						{
+							case 0:
+								ColorToSend = new Color(217.0f / 255.0f, 182.0f / 255.0f, 130.0f / 255.0f);
+								break;
+							case 1:
+								ColorToSend = new Color(0.0f, 107.0f / 255.0f, 44.0f / 255.0f);
+								break;
+							case 2:
+								ColorToSend = new Color(64.0f / 255.0f, 56.0f / 255.0f, 102.0f / 255.0f);
+								break;
+							case 3:
+								ColorToSend = new Color(116.0f / 255.0f, 112.0f / 255.0f, 43.0f / 255.0f);
+								break;
+							case 4:
+								ColorToSend = new Color(101.0f / 255.0f, 99.0f / 255.0f, 84.0f / 255.0f);
+								break;
+							default:
+								ColorToSend = new Color(0.2f, 0.0f, 0.2f);
+								break;
+						}
+					}
 				}
 				else if (PlayerState.InCloakingField())
 				{
@@ -88,8 +124,7 @@ namespace RGBIntegration.EffectControllers
 				}
 				else if (PlayerState.InBrambleDimension())
 				{
-					// TODO: Fog
-					ColorToSend = new Color(83.0f / 255.0f, 99.0f / 255.0f, 87.0f / 255.0f);
+					ColorToSend = new Color(101.0f / 255.0f, 99.0f / 255.0f, 84.0f / 255.0f);
 				}
 				else
 				{
